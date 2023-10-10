@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+const equipmentSchema = require('./equipment')
+
 const fishSchema = new mongoose.Schema(
 	{
 		species: {
@@ -31,15 +33,21 @@ const fishSchema = new mongoose.Schema(
 			type: String,
 			required: false,
 		},
+		equipment: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'Equipment',
+			},
+		],
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
-			required: true,
+			// required: true,
 		},
 	},
 	{
 		timestamps: true,
 	}
-)
+) 
 
 module.exports = mongoose.model('Fish', fishSchema)
