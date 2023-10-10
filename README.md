@@ -1,35 +1,48 @@
-# Fish Folio API
+# Fish Folio
 
-This is the backend for the full stack Fish Folio app.
+FishFolio is a web application for fishing enthusiasts to log and share their fishing experiences, including details about the fish they've caught, the locations where they were caught, and the bait used.
 
-## Planning Section
+## Table of Contents
 
-2 parts associated with API
-- ERD
-- User Stories
+- [User Stories](#user-stories)
+- [ERD](#erd)
+- [Technologies Used](#technologies-used)
+- [Authentication](#authentication)
 
-### User Stories
 
-AAU I want to...
-- Create fish
-- See a list of all fish
-- See a list of MY fish
-- See a single fish
-- Update a fish
-- Delete a fish
-- Create equipment
-- Assign equipment to a fish
-- Update equipment
-- Delete equipment
+
+## User Stories
+
+As a user...
+
+- As a visitor, I want user registration and authentication features
+- As a visitor, I want to log catches with details such as species, size, weight, date, and bait used
+- As a visitor, I want to associate catches with specific locations, including optional GPS coordinates
+- As a visitor, I want to be able to edit and delete my own posts
+- As a visitor, I want to be able to view posts from other users
+
+## Icebox (Additional Features)
+
+- As a logged-in user, I want to add pictures to fish postings
+- As a logged-in user, I want to view the weather in any location where I plan to fish
+- As a logged-in user, I want to be able to leave a comment on posts
+
+## ERD
+![fish-folio-erd](https://github.com/brendinsgit/Fish_Folio/assets/139824521/e0db2245-4b52-4e46-8504-1d76573a6ef1)
+
+
+
+## Technologies Used
+
+- ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?logo=mongodb&logoColor=white&style=flat)
+- ![Express.js](https://img.shields.io/badge/-Express.js-000000?logo=express&logoColor=white&style=flat)
+- ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white&style=flat)
+- ![Node.js](https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white&style=flat)
+- ![Bootstrap](https://img.shields.io/badge/-Bootstrap-563D7C?logo=bootstrap&logoColor=white&style=flat)
+
 
 ## API
-
-Use this as the basis for your own API documentation. Add a new third-level
-heading for your custom entities, and follow the pattern provided for the
-built-in user authentication documentation.
-
-Scripts are included in [`curl-scripts`](curl-scripts) to test built-in actions. Feel free to use Postman for testing, using the curl scripts listed below and in the folder for setting up headers and request bodies.
-Add your own scripts to test your custom API.
+Postman for testing.
 
 ### Authentication
 
@@ -37,118 +50,27 @@ Add your own scripts to test your custom API.
 |--------|------------------------|-------------------|
 | POST   | `/sign-up`             | `users#signup`    |
 | POST   | `/sign-in`             | `users#signin`    |
-| PATCH  | `/change-password/` | `users#changepw`  |
-| DELETE | `/sign-out/`        | `users#signout`   |
+| PATCH  | `/change-password/`    | `users#changepw`  |
+| DELETE | `/sign-out/`           | `users#signout`   |
 
-#### POST /sign-up
+### Fish
 
-Request:
+| Verb   | URI Pattern            | Controller#Action |
+|--------|------------------------|-------------------|
+| GET    | `/fish`                | `fish#index`      |
+| GET    | `/fish/<fish_id>`      | `fish#show`       |
+| POST   | `/fish`                | `fish#create`     |
+| PATCH  | `/fish/<fish_id>`      | `fish#update`     |
+| DELETE | `/fish/<fish_id>`      | `fish#delete`     |
 
-```sh
-curl --include --request POST http://localhost:8000/sign-up \
-  --header "Content-Type: application/json" \
-  --data '{
-    "credentials": {
-      "email": "an@something.email",
-      "password": "some password",
-      "password_confirmation": "some password"
-    }
-  }'
-```
+### Equipment
 
-```sh
-curl-scripts/sign-up.sh
-```
+| Verb   | URI Pattern                 |   Controller#Action    |
+|--------|-----------------------------|------------------------|
+| POST   | `/equipment/<equipment_id>` | `equipment_id#create`  |
+| PATCH  | `/equipment/<equipment_id>` | `equipment_id#update`  |
+| DELETE | `/equipment/<equipment_id>` | `equipment_id#delete`  |
 
-Response:
 
-```md
-HTTP/1.1 201 Created
-Content-Type: application/json; charset=utf-8
-
-{
-  "user": {
-    "id": 1,
-    "email": "an@something.email"
-  }
-}
-```
-
-#### POST /sign-in
-
-Request:
-
-```sh
-curl --include --request POST http://localhost:8000/sign-in \
-  --header "Content-Type: application/json" \
-  --data '{
-    "credentials": {
-      "email": "an@something.email",
-      "password": "some password"
-    }
-  }'
-```
-
-```sh
-curl-scripts/sign-in.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 200 OK
-Content-Type: application/json; charset=utf-8
-
-{
-  "user": {
-    "id": 1,
-    "email": "an@something.email",
-    "token": "33ad6372f795694b333ec5f329ebeaaa"
-  }
-}
-```
-
-#### PATCH /change-password/
-
-Request:
-
-```sh
-curl --include --request PATCH http://localhost:8000/change-password/ \
-  --header "Authorization: Bearer $TOKEN" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "passwords": {
-      "old": "some password",
-      "new": "super sekrit"
-    }
-  }'
-```
-
-```sh
-TOKEN=33ad6372f795694b333ec5f329ebeaaa curl-scripts/change-password.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 204 No Content
-```
-
-#### DELETE /sign-out/
-
-Request:
-
-```sh
-curl --include --request DELETE http://localhost:8000/sign-out/ \
-  --header "Authorization: Bearer $TOKEN"
-```
-
-```sh
-TOKEN=33ad6372f795694b333ec5f329ebeaaa curl-scripts/sign-out.sh
-```
-
-Response:
-
-```md
-HTTP/1.1 204 No Content
-```
+### Token Auth Strategy
+Send the token as `Bearer Token <token>`
