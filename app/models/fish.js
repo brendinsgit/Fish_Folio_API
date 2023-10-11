@@ -33,12 +33,7 @@ const fishSchema = new mongoose.Schema(
 			type: String,
 			required: false,
 		},
-		equipment: [
-			{
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'Equipment',
-			},
-		],
+		equipment: [equipmentSchema],
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',

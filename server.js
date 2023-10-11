@@ -5,6 +5,7 @@ const cors = require('cors')
 
 // require route files
 const fishRoutes = require('./app/routes/fish_routes')
+const equipmentRoutes = require('./app/routes/equipment_routes')
 const userRoutes = require('./app/routes/user_routes')
 
 // require middleware
@@ -66,6 +67,7 @@ app.use(requestLogger)
 
 // register route files
 app.use(fishRoutes)
+app.use(equipmentRoutes)
 app.use(userRoutes)
 
 // register error handling middleware

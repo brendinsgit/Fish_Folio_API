@@ -67,10 +67,40 @@ Postman for testing.
 
 | Verb   | URI Pattern                 |   Controller#Action    |
 |--------|-----------------------------|------------------------|
-| POST   | `/equipment/<equipment_id>` | `equipment_id#create`  |
-| PATCH  | `/equipment/<equipment_id>` | `equipment_id#update`  |
-| DELETE | `/equipment/<equipment_id>` | `equipment_id#delete`  |
+| POST   | `/fish/<fish_id>` | `equipment#create`  |
+| PATCH  | `/fish/<fish_id>/<equipment_id>` | `equipment#update`  |
+| DELETE | `/fish/<fish_id>/<equipment_id>` | `equipment#delete`  |
 
+#### Recommended Request Bodies
+
+Request - users#signup:
+
+```json
+{
+    "credentials": {
+        "email": "an@something.email",
+        "password": "some password",
+        "password_confirmation": "some password"
+    }
+}
+```
+
+Request - fish#create (requires a token):
+
+```json
+{
+    "fish": {
+        "species": "Flounder",
+        "size": "18 inches",
+        "weight": "4lb",
+        "location": "By the dock at X harbor",
+        "bait": "mullet",
+        "date": "05-02-2023",
+        "notes": "was in the shallow part of the water"
+    }
+}
+```
 
 ### Token Auth Strategy
+
 Send the token as `Bearer Token <token>`
