@@ -31,6 +31,7 @@ const router = express.Router()
 // GET /fish
 router.get('/fish', (req, res, next) => {
 	Fish.find()
+		.populate('owner')
 		.then((fish) => {
 			// apply `.toObject` to each one
 			return fish.map((fish) => fish.toObject())
@@ -57,9 +58,10 @@ router.get('/fish/mine', requireToken, (req, res, next) => {
 
 // SHOW
 // GET /fish/5a7db6c74d55bc51bdf39793
-router.get('/fish/:id', requireToken, (req, res, next) => {
+router.get('/fish/:id', (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	Fish.findById(req.params.id)
+		.populate('owner')
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "fish" JSON
 		.then((fish) => res.status(200).json({ fish: fish.toObject() }))
