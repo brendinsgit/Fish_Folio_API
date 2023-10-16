@@ -1,0 +1,27 @@
+# fly.toml app configuration file generated for fishfolioapi on 2023-10-15T17:31:23-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "fishfolioapi"
+kill_signal = "SIGINT"
+kill_timeout = 5
+mounts = []
+primary_region = "iad"
+processes = []
+
+[env]
+  PORT = "8080"
+  MONGODB_URI = "mongodb+srv://brendin0702:Acquire0702@brendinsdb.hkap1tw.mongodb.net/fishFolio?retryWrites=true&w=majority"
+  CLIENT_ORIGIN = "https://fishfolio.netlify.app"
+
+[build]
+
+[[services]]
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
