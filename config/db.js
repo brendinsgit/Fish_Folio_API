@@ -4,19 +4,19 @@ require('dotenv').config()
 
 // creating a base name for the mongodb
 // REPLACE THE STRING WITH YOUR OWN DATABASE NAME
-const mongooseBaseName = 'fish-folio-api'
+const mongooseBaseName = 'fishFolio'
 
 // create the mongodb uri for development and test
 // this is for using local mongodb
-// const database = {
-// 	development: `mongodb://localhost/${mongooseBaseName}-development`,
-// 	test: `mongodb://localhost/${mongooseBaseName}-test`,
-// }
-//this is for using mongodb atlas on the cloud
 const database = {
-	development: process.env.MONGODB_URI,
-	test: process.env.MONGODB_URI,
+	development: `mongodb://localhost/${mongooseBaseName}-development`,
+	test: `mongodb://localhost/${mongooseBaseName}-test`,
 }
+//this is for using mongodb atlas on the cloud
+// const database = {
+// 	development: process.env.MONGODB_URI,
+// 	test: process.env.MONGODB_URI,
+// }
 
 // Identify if development environment is test or development
 // select DB based on whether a test file was executed before `server.js`
